@@ -6,7 +6,8 @@ import 'package:tms/assets/images.dart';
 import 'package:tms/assets/spacing.dart';
 import 'package:tms/components/build_button.dart';
 import 'package:tms/components/text.dart';
-import 'package:tms/view/login_screen.dart';
+import 'package:tms/view/auth%20screens/login_screen.dart';
+import 'package:tms/view/auth%20screens/register_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -50,12 +51,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ).paddingBottom(size20),
               Center(
                 child: BuildButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      const RegisterScreen().launch(context);
+                    },
                     height: size40,
-                    backgrounDColor: white.withOpacity(.3),
+                    backgrounDColor: black,
                     width: size.width * .5,
                     borderColor: primary_color,
-                    textcolor: primary_color,
+                    textcolor: white,
                     text: "Sign Up"),
               ).paddingBottom(size30),
               Center(child: text("Sign Up with", textColor: grey))
@@ -85,7 +88,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             child: Image.asset(
               image_hello,
               height: size.height * .3,
-              width: size.width * .8,
+              width: orientation == Orientation.landscape
+                  ? size.width * .9
+                  : size.width * .8,
             ),
           ),
         ),
@@ -93,14 +98,3 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
   }
 }
-
-class ImageModel {
-  String? image;
-  ImageModel({this.image});
-}
-
-final imageModel = [
-  ImageModel(image: image_facebook),
-  ImageModel(image: image_google),
-  ImageModel(image: image_linkedin)
-];

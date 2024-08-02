@@ -31,7 +31,7 @@ class textField extends StatelessWidget {
     this.onchanged,
     this.minline,
     this.maxline,
-    this.height = 70.0,
+    this.height = 55.0,
     this.prefixWidget,
     this.suffixWidget,
     this.suffix,
@@ -51,6 +51,7 @@ class textField extends StatelessWidget {
             controller: controller,
             validator: validator,
             minLines: minline,
+            style: const TextStyle(fontWeight: FontWeight.w300),
             inputFormatters: inputformater,
             maxLength: maxlength,
             maxLines: maxline,
@@ -65,7 +66,7 @@ class textField extends StatelessWidget {
               fillColor: whiteColor,
               filled: true,
               enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: white),
+                  borderSide: const BorderSide(color: grey),
                   borderRadius: BorderRadius.circular(8)),
               focusedBorder: OutlineInputBorder(
                   borderSide: const BorderSide(color: white),
