@@ -7,6 +7,7 @@ const image_github = "images/github.png";
 const image_hello = "images/hello.png";
 const image_register = "images/register.png";
 const image_profile = "images/waheedd.png";
+const image_logo = "images/logo.png";
 
 // svg
 

@@ -118,6 +118,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: BuildButton(
                       onPressed: () {
                         const LoginScreen().launch(context);
+                        toast("Register successfully",
+                            bgColor: greenColor, textColor: white);
                       },
                       height: size40,
                       backgrounDColor: white,

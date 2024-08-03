@@ -65,6 +65,8 @@ class _LoginScreenState extends State<LoginScreen> {
               child: BuildButton(
                   onPressed: () {
                     const DashBoardScreen().launch(context);
+                    toast("Login successfully",
+                        bgColor: greenColor, textColor: white);
                   },
                   height: size40,
                   width: size.width * .5,

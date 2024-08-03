@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:tms/assets/colors.dart';
@@ -6,6 +7,10 @@ import 'package:tms/assets/images.dart';
 import 'package:tms/assets/spacing.dart';
 import 'package:tms/components/text.dart';
 import 'package:tms/components/textfield.dart';
+import 'package:tms/view/auth%20screens/welcome_screen.dart';
+import 'package:tms/view/dashboard%20screens/department_screen.dart';
+import 'package:tms/view/dashboard%20screens/project_screen.dart';
+import 'package:tms/view/dashboard%20screens/task_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -36,10 +41,18 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: [
                 ListTile(
-                  leading: const CircleAvatar(
-                    radius: size40,
-                    backgroundColor: primary_color,
-                    backgroundImage: AssetImage(image_profile),
+                  leading: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: ClipOval(
+                      child: Image.asset(
+                        image_profile,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                   title: text("Waheed",
                       textColor: primary_color, fontWeight: FontWeight.w500),
@@ -74,199 +87,217 @@ class _HomeScreenState extends State<HomeScreen> {
                 drawerListtile(
                   txt: "Departments",
                   icon: Icons.store_outlined,
-                  ontap: () {},
+                  ontap: () {
+                    const DepartmentScreen().launch(context);
+                  },
                 ),
                 drawerListtile(
                   txt: "Projects",
                   icon: Icons.folder_open,
-                  ontap: () {},
+                  ontap: () {
+                    const ProjectScreen().launch(context);
+                  },
                 ),
                 drawerListtile(
                   txt: "Tasks",
                   icon: Icons.list_outlined,
-                  ontap: () {},
+                  ontap: () {
+                    const TasksScreen().launch(context);
+                  },
+                ),
+                drawerListtile(
+                  txt: "Sign Out",
+                  icon: Icons.logout,
+                  ontap: () {
+                    const WelcomeScreen().launch(context);
+                    toast("Sign Out successfully",
+                        bgColor: redColor, textColor: white);
+                  },
                 ),
               ],
             ),
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                const Icon(
-                  Icons.home_filled,
-                  color: primary_color,
-                  size: size30,
-                ).paddingRight(size10),
-                text("Dashboard",
-                    fontSize: size20,
-                    textColor: primary_color,
-                    fontWeight: FontWeight.w600),
-              ],
-            ).paddingBottom(size20),
-            text("Hi, Waheed",
-                fontSize: size12, textColor: grey, fontWeight: FontWeight.w400),
-            text("Let’s be productive today!",
-                    fontSize: size16, fontWeight: FontWeight.w400)
-                .paddingBottom(size15),
-            textField(
-              height: size50,
-              hint: "Search task",
-              maxline: 1,
-              suffix: const Icon(Icons.search),
-            ).paddingBottom(size10),
-            GridView.builder(
-              itemCount: dashboardgradview.length,
-              shrinkWrap: true,
-              physics: const BouncingScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisSpacing: size10,
-                  crossAxisSpacing: size10,
-                  childAspectRatio: orientation == Orientation.portrait ? 1 : 2,
-                  crossAxisCount: 2),
-              itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(size16),
-                    gradient: LinearGradient(
-                      colors: [primary_color, primary_color.withOpacity(.4)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.topRight,
+      body: WillPopScope(
+        onWillPop: () async {
+          bool exitConfirmed = await showDialog(
+            context: context,
+            builder: (context) => const appDismisDiolog(),
+          );
+
+          if (exitConfirmed ?? false) {
+            SystemNavigator.pop();
+
+            return true;
+          } else {
+            return false;
+          }
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  const Icon(
+                    Icons.home_filled,
+                    color: primary_color,
+                    size: size30,
+                  ).paddingRight(size10),
+                  text("Dashboard",
+                      fontSize: size20,
+                      textColor: primary_color,
+                      fontWeight: FontWeight.w600),
+                ],
+              ).paddingBottom(size20),
+              text("Hi, Waheed",
+                  fontSize: size12,
+                  textColor: grey,
+                  fontWeight: FontWeight.w400),
+              text("Let’s be productive today!",
+                      fontSize: size16, fontWeight: FontWeight.w400)
+                  .paddingBottom(size15),
+              textField(
+                height: size50,
+                hint: "Search task",
+                maxline: 1,
+                suffix: const Icon(Icons.search),
+              ).paddingBottom(size10),
+              GridView.builder(
+                itemCount: dashboardgradview.length,
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    mainAxisSpacing: size10,
+                    crossAxisSpacing: size10,
+                    childAspectRatio:
+                        orientation == Orientation.portrait ? 1 : 2,
+                    crossAxisCount: 2),
+                itemBuilder: (context, index) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(size16),
+                      gradient: LinearGradient(
+                        colors: [primary_color, primary_color.withOpacity(.4)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.topRight,
+                      ),
                     ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        text(dashboardgradview[index].task_amount,
+                                textColor: white,
+                                fontSize: size30,
+                                fontWeight: FontWeight.w500)
+                            .paddingBottom(size15),
+                        text(dashboardgradview[index].tasks,
+                                textColor: white,
+                                fontSize: size16,
+                                fontWeight: FontWeight.w400)
+                            .paddingBottom(size15),
+                      ],
+                    ).paddingAll(size25),
+                  );
+                },
+              ).paddingBottom(size20),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                        height: size50,
+                        decoration: BoxDecoration(
+                          // color: black,
+                          borderRadius: BorderRadius.circular(size16),
+                          gradient: LinearGradient(
+                            colors: [greenColor, greenColor.withOpacity(.3)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.topRight,
+                          ),
+                        ),
+                        child: Center(
+                          child: RichText(
+                            text: const TextSpan(
+                              // style: DefaultTextStyle.of(context).style,
+                              children: [
+                                TextSpan(
+                                  text: "22",
+                                  style: TextStyle(
+                                      wordSpacing: 5.0,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: size20,
+                                      color: white),
+                                ),
+                                WidgetSpan(
+                                    child: SizedBox(
+                                  width: size10,
+                                )),
+                                TextSpan(
+                                  text: "Projects",
+                                  style: TextStyle(
+                                    wordSpacing: 5.0,
+                                    color: white,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: size16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      text(dashboardgradview[index].task_amount,
-                              textColor: white,
-                              fontSize: size30,
-                              fontWeight: FontWeight.w500)
-                          .paddingBottom(size15),
-                      text(dashboardgradview[index].tasks,
-                              textColor: white,
-                              fontSize: size16,
-                              fontWeight: FontWeight.w400)
-                          .paddingBottom(size15),
-                    ],
-                  ).paddingAll(size25),
-                );
-              },
-            ).paddingBottom(size20),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                      height: size50,
-                      decoration: BoxDecoration(
-                        // color: black,
-                        borderRadius: BorderRadius.circular(size16),
-                        gradient: LinearGradient(
-                          colors: [greenColor, greenColor.withOpacity(.3)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.topRight,
-                        ),
-                      ),
-                      child: Center(
-                        child: RichText(
-                          text: const TextSpan(
-                            // style: DefaultTextStyle.of(context).style,
-                            children: [
-                              TextSpan(
-                                text: "22",
-                                style: TextStyle(
-                                    wordSpacing: 5.0,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: size20,
-                                    color: white),
-                              ),
-                              WidgetSpan(
-                                  child: SizedBox(
-                                width: size10,
-                              )),
-                              TextSpan(
-                                text: "Projects",
-                                style: TextStyle(
-                                  wordSpacing: 5.0,
-                                  color: white,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: size16,
-                                ),
-                              ),
-                            ],
+                  const SizedBox(
+                    width: size10,
+                  ),
+                  Expanded(
+                    child: Container(
+                        height: size50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(size16),
+                          gradient: LinearGradient(
+                            colors: [redColor, redColor.withOpacity(.3)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.topRight,
                           ),
                         ),
-                      )
-                      //  Row(
-                      //   // mainAxisAlignment: MainAxisAlignment.start,
-                      //   // crossAxisAlignment: CrossAxisAlignment.start,
-                      //   children: [
-                      //     text("22",
-                      //             textColor: white,
-                      //             fontSize: size30,
-                      //             fontWeight: FontWeight.w500)
-                      //         .paddingLeft(size10),
-                      //     text("Projects",
-                      //         textColor: white,
-                      //         fontSize: size16,
-                      //         fontWeight: FontWeight.w400),
-                      //   ],
-                      // ).paddingAll(size25),
-                      ),
-                ),
-                const SizedBox(
-                  width: size10,
-                ),
-                Expanded(
-                  child: Container(
-                      height: size50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(size16),
-                        gradient: LinearGradient(
-                          colors: [redColor, redColor.withOpacity(.3)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.topRight,
-                        ),
-                      ),
-                      child: Center(
-                        child: RichText(
-                          text: const TextSpan(
-                            children: [
-                              TextSpan(
-                                text: "5",
-                                style: TextStyle(
-                                    wordSpacing: 5.0,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: size20,
-                                    color: white),
-                              ),
-                              WidgetSpan(
-                                  child: SizedBox(
-                                width: size10,
-                              )),
-                              TextSpan(
-                                text: "Missed Tasks",
-                                style: TextStyle(
-                                  wordSpacing: 5.0,
-                                  color: white,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: size16,
+                        child: Center(
+                          child: RichText(
+                            text: const TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: "5",
+                                  style: TextStyle(
+                                      wordSpacing: 5.0,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: size20,
+                                      color: white),
                                 ),
-                              ),
-                            ],
+                                WidgetSpan(
+                                    child: SizedBox(
+                                  width: size10,
+                                )),
+                                TextSpan(
+                                  text: "Missed Tasks",
+                                  style: TextStyle(
+                                    wordSpacing: 5.0,
+                                    color: white,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: size16,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      )),
-                )
-              ],
-            )
-          ],
-        ).paddingAll(size20),
+                        )),
+                  )
+                ],
+              )
+            ],
+          ).paddingAll(size20),
+        ),
       ),
     );
   }
@@ -323,6 +354,43 @@ class drawerListtile extends StatelessWidget {
         Icons.arrow_forward_ios,
         size: size20,
       ),
+    );
+  }
+}
+//dismissable diolog
+
+class appDismisDiolog extends StatelessWidget {
+  const appDismisDiolog({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      // title: const Text('Exit App'),
+      content: const Text(
+        'Do you want to exit the app?',
+        textAlign: TextAlign.center,
+      ),
+      actions: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(false); // Don't exit
+              },
+              child: const Text('No'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(true); // Confirm exit
+              },
+              child: const Text('Yes'),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

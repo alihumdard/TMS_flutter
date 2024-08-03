@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:tms/assets/spacing.dart';
 import 'package:tms/components/text.dart';
+import 'package:tms/view/dashboard%20screens/dashboard_screen.dart';
 
 class TasksScreen extends StatefulWidget {
   const TasksScreen({super.key});
@@ -17,11 +18,18 @@ class _TasksScreenState extends State<TasksScreen> {
       appBar: AppBar(
         title: text("Tasks"),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [text("Tasks will show here")],
-          ).paddingAll(size20),
+      body: WillPopScope(
+        onWillPop: () async {
+          await const DashBoardScreen().launch(context);
+
+          return true;
+        },
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [text("Tasks will show here")],
+            ).paddingAll(size20),
+          ),
         ),
       ),
     );
