@@ -9,6 +9,8 @@ import 'package:tms/components/text.dart';
 import 'package:tms/components/textfield.dart';
 import 'package:tms/view/auth%20screens/welcome_screen.dart';
 import 'package:tms/view/dashboard%20screens/department_screen.dart';
+import 'package:tms/view/dashboard%20screens/notification_screen.dart';
+import 'package:tms/view/dashboard%20screens/profile_screen.dart';
 import 'package:tms/view/dashboard%20screens/project_screen.dart';
 import 'package:tms/view/dashboard%20screens/roles_screen.dart';
 import 'package:tms/view/dashboard%20screens/task_screen.dart';
@@ -29,9 +31,16 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: white,
         actions: [
-          IconButton(onPressed: () {}, icon: SvgPicture.asset(svg_person)),
           IconButton(
-              onPressed: () {}, icon: SvgPicture.asset(svg_notification)),
+              onPressed: () {
+                const ProfileScreen().launch(context);
+              },
+              icon: SvgPicture.asset(svg_person)),
+          IconButton(
+              onPressed: () {
+                const NotificationScreen().launch(context);
+              },
+              icon: SvgPicture.asset(svg_notification)),
           IconButton(onPressed: () {}, icon: SvgPicture.asset(svg_setting)),
         ],
       ),
@@ -43,15 +52,15 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 ListTile(
                   leading: Container(
-                    width: 50,
-                    height: 50,
+                    width: 70,
+                    height: 70,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),
                     child: ClipOval(
                       child: Image.asset(
                         image_profile,
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
@@ -60,11 +69,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   subtitle: text("Software Engineer",
                       textColor: primary_color, fontWeight: FontWeight.w300),
                 ).paddingSymmetric(vertical: size30),
-                drawerListtile(
-                  txt: "DashBoard",
-                  icon: Icons.home_filled,
-                  ontap: () {},
-                ),
+                // drawerListtile(
+                //   txt: "DashBoard",
+                //   icon: Icons.home_filled,
+                //   ontap: () {},
+                // ),
                 drawerListtile(
                   txt: "Roles",
                   icon: Icons.person_pin_outlined,

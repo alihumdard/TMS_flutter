@@ -18,19 +18,21 @@ class _ProjectScreenState extends State<ProjectScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          const AddProjectScreen().launch(context);
-        },
-        backgroundColor: primary_color,
-        child: const Icon(
-          Icons.add,
-          color: white,
-        ),
-      ),
       appBar: AppBar(
         centerTitle: true,
         title: const Text("Projects"),
+        actions: [
+          FloatingActionButton(
+            onPressed: () {
+              const AddProjectScreen().launch(context);
+            },
+            backgroundColor: primary_color,
+            child: const Icon(
+              Icons.add,
+              color: white,
+            ),
+          ).paddingAll(size8)
+        ],
       ),
       body: WillPopScope(
         onWillPop: () async {
@@ -100,7 +102,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
                 ),
               )
             ],
-          ).paddingSymmetric(horizontal: size20),
+          ).paddingAll(size20),
         ),
       ),
     );

@@ -3,6 +3,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:tms/assets/colors.dart';
 import 'package:tms/assets/spacing.dart';
 import 'package:tms/components/text.dart';
+import 'package:tms/view/dashboard%20screens/add_tasks.dart';
 import 'package:tms/view/dashboard%20screens/dashboard_screen.dart';
 import 'package:tms/view/dashboard%20screens/task_details.dart';
 
@@ -20,6 +21,18 @@ class _TasksScreenState extends State<TasksScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text("Tasks"),
+        actions: [
+          FloatingActionButton(
+            onPressed: () {
+              const AddTasksScreen().launch(context);
+            },
+            backgroundColor: primary_color,
+            child: const Icon(
+              Icons.add,
+              color: white,
+            ),
+          ).paddingAll(size8),
+        ],
       ),
       body: WillPopScope(
         onWillPop: () async {
