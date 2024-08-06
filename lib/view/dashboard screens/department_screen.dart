@@ -17,7 +17,8 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: text("Departments"),
+        centerTitle: true,
+        title: const Text("Departments"),
       ),
       body: WillPopScope(
         onWillPop: () async {
@@ -37,8 +38,11 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15.0),
                         // color: primary_color,
-                        gradient: const LinearGradient(
-                          colors: [primary_color, purple],
+                        gradient: LinearGradient(
+                          colors: [
+                            primary_color,
+                            primary_color.withOpacity(.3)
+                          ],
                           begin: Alignment.topLeft,
                           end: Alignment.topRight,
                         ),

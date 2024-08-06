@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:tms/assets/colors.dart';
 import 'package:tms/assets/spacing.dart';
 import 'package:tms/components/build_button.dart';
-import 'package:tms/components/text.dart';
 import 'package:tms/components/textfield.dart';
 
 class ProjectDetailsScreen extends StatefulWidget {
@@ -18,7 +18,8 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: text(widget.topic.toString()),
+        centerTitle: true,
+        title: Text(widget.topic.toString()),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -46,7 +47,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                   "Project timeline: 12 weeks, with milestones and check-ins to ensure timely delivery and client satisfaction.",
             ).paddingSymmetric(vertical: size10),
             detailsText(
-              txt: "Ref. Project",
+              txt: "Reference Project",
             ),
             detailsSubTxt(
               subtext:
@@ -62,7 +63,13 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
               height: size100,
               maxline: 6,
             ),
-            BuildButton(onPressed: () {}, text: "Submit")
+            Align(
+              alignment: Alignment.center,
+              child: BuildButton(
+                  onPressed: () {},
+                  width: MediaQuery.sizeOf(context).width * .4,
+                  text: "Submit"),
+            )
           ],
         ).paddingAll(size20),
       ),
@@ -82,7 +89,7 @@ class detailsSubTxt extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       subtext.toString(),
-      style: const TextStyle(fontSize: size14, color: grey),
+      style: const TextStyle(fontSize: size14),
     );
   }
 }
@@ -98,13 +105,23 @@ class detailsText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      txt.toString(),
-      style: const TextStyle(
-        fontSize: size20,
-        decoration: TextDecoration.underline,
-        fontWeight: FontWeight.bold,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        gradient: const LinearGradient(
+          colors: [primary_color, purple],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
       ),
+      child: Text(
+        txt.toString(),
+        style: const TextStyle(
+          fontSize: size20, color: white,
+          // decoration: TextDecoration.underline,
+          fontWeight: FontWeight.bold,
+        ),
+      ).paddingOnly(left: size15, right: size30),
     );
   }
 }

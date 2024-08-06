@@ -3,6 +3,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:tms/assets/colors.dart';
 import 'package:tms/assets/spacing.dart';
 import 'package:tms/components/text.dart';
+import 'package:tms/view/dashboard%20screens/add_project.dart';
 import 'package:tms/view/dashboard%20screens/dashboard_screen.dart';
 import 'package:tms/view/dashboard%20screens/project_details.dart';
 
@@ -17,8 +18,19 @@ class _ProjectScreenState extends State<ProjectScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          const AddProjectScreen().launch(context);
+        },
+        backgroundColor: primary_color,
+        child: const Icon(
+          Icons.add,
+          color: white,
+        ),
+      ),
       appBar: AppBar(
-        title: text("Projects"),
+        centerTitle: true,
+        title: const Text("Projects"),
       ),
       body: WillPopScope(
         onWillPop: () async {
@@ -38,8 +50,11 @@ class _ProjectScreenState extends State<ProjectScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15.0),
                         // color: primary_color,
-                        gradient: const LinearGradient(
-                          colors: [primary_color, purple],
+                        gradient: LinearGradient(
+                          colors: [
+                            primary_color,
+                            primary_color.withOpacity(.3)
+                          ],
                           begin: Alignment.topLeft,
                           end: Alignment.topRight,
                         ),
@@ -70,14 +85,14 @@ class _ProjectScreenState extends State<ProjectScreen> {
                           child: Container(
                               width: size50,
                               decoration: BoxDecoration(
-                                  color: grey.withOpacity(.8),
-                                  borderRadius: BorderRadius.circular(size25)),
+                                  color: white,
+                                  borderRadius: BorderRadius.circular(size15)),
                               child: const Center(
                                   child: Icon(
                                 Icons.visibility,
-                                color: white,
+                                color: primary_color,
                                 size: size20,
-                              ))).paddingAll(7.0),
+                              ))).paddingAll(10.0),
                         ),
                       ),
                     ).paddingBottom(size8);

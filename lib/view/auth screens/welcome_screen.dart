@@ -55,7 +55,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       const RegisterScreen().launch(context);
                     },
                     height: size40,
-                    backgrounDColor: black,
+                    backgrounDColor: black.withOpacity(.3),
                     width: size.width * .5,
                     borderColor: primary_color,
                     textcolor: white,

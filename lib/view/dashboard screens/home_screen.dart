@@ -10,6 +10,7 @@ import 'package:tms/components/textfield.dart';
 import 'package:tms/view/auth%20screens/welcome_screen.dart';
 import 'package:tms/view/dashboard%20screens/department_screen.dart';
 import 'package:tms/view/dashboard%20screens/project_screen.dart';
+import 'package:tms/view/dashboard%20screens/roles_screen.dart';
 import 'package:tms/view/dashboard%20screens/task_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -67,7 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 drawerListtile(
                   txt: "Roles",
                   icon: Icons.person_pin_outlined,
-                  ontap: () {},
+                  ontap: () {
+                    const RolesScreen().launch(context);
+                  },
                 ),
                 drawerListtile(
                   txt: "Users",
@@ -76,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 drawerListtile(
                   txt: "Companies",
-                  icon: Icons.home_work_outlined,
+                  icon: Icons.store_mall_directory_outlined,
                   ontap: () {},
                 ),
                 drawerListtile(
@@ -86,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 drawerListtile(
                   txt: "Departments",
-                  icon: Icons.store_outlined,
+                  icon: Icons.home_work_outlined,
                   ontap: () {
                     const DepartmentScreen().launch(context);
                   },
@@ -100,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 drawerListtile(
                   txt: "Tasks",
-                  icon: Icons.list_outlined,
+                  icon: Icons.format_list_numbered_sharp,
                   ontap: () {
                     const TasksScreen().launch(context);
                   },

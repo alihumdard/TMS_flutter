@@ -17,8 +17,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   int selectedIndex = 0;
 
   List<IconData> navbarIconsSvgs = [
-    Icons.home_outlined,
-    Icons.store_mall_directory_outlined,
+    Icons.home_filled,
+    Icons.home_work_outlined,
     Icons.folder_open_outlined,
     Icons.format_list_numbered_sharp
   ];
