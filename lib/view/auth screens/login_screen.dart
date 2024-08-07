@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
 import 'package:tms/assets/images.dart';
 import 'package:tms/assets/spacing.dart';
 import 'package:tms/components/build_button.dart';
 import 'package:tms/components/text.dart';
 import 'package:tms/components/textfield.dart';
+import 'package:tms/view%20model/auth_view_model.dart';
 import 'package:tms/view/auth%20screens/register_screen.dart';
-import 'package:tms/view/dashboard%20screens/dashboard_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,10 +17,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
-
+    var authViewModel = Provider.of<AuthViewModel>(context, listen: false);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -46,6 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontSize: size12,
                     fontWeight: FontWeight.w300)),
             textField(
+              controller: emailController,
               height: size55,
               hint: "Email",
               maxline: 1,
@@ -57,16 +62,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontSize: size12,
                     fontWeight: FontWeight.w300)),
             textField(
+              controller: passwordController,
               height: size55,
               hint: "Password",
               maxline: 1,
             ),
             Center(
               child: BuildButton(
+                  loading: authViewModel.loading,
                   onPressed: () {
-                    const DashBoardScreen().launch(context);
-                    toast("Login successfully",
-                        bgColor: greenColor, textColor: white);
+                    Map<String, dynamic> data = {
+                      "email": emailController.text.trim().toString(),
+                      "password": passwordController.text.trim().toString(),
+                    };
+                    authViewModel.loginApi(data, context);
                   },
                   height: size40,
                   width: size.width * .5,

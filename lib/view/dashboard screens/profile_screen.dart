@@ -36,7 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 const Row(),
                 Container(
-                  padding: const EdgeInsets.only(top: size20),
+                  // padding: const EdgeInsets.only(top: size20),
                   height: MediaQuery.sizeOf(context).height * .6,
                   decoration: BoxDecoration(boxShadow: const [
                     BoxShadow(
@@ -46,50 +46,64 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       spreadRadius: 1,
                     ),
                   ], borderRadius: BorderRadius.circular(size15), color: white),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: InkWell(
-                            onTap: () {},
-                            child: Container(
-                              width: size100,
-                              height: size100,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: ClipOval(
-                                child: Image.asset(
-                                  image_profile,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      ColorFiltered(
+                        colorFilter: ColorFilter.mode(
+                            blackColor.withOpacity(0.6), BlendMode.srcATop),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(size15),
+                          child: Image.asset(
+                            "images/tsp.png",
+                            fit: BoxFit.fill,
                           ),
                         ),
-                        const SizedBox(
-                          height: size40,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      ),
+                      SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            Align(
+                              alignment: Alignment.center,
+                              child: InkWell(
+                                onTap: () {},
+                                child: Container(
+                                  width: 150.0,
+                                  height: 150.0,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: ClipOval(
+                                    child: Image.asset(
+                                      image_profile,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ).paddingTop(size30),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: size40,
+                            ),
                             text("Waheed Ullah",
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: size16)
-                                .paddingSymmetric(vertical: size20),
-                            text("Developer",
+                                fontWeight: FontWeight.w600,
+                                textColor: white,
+                                fontSize: size25),
+                            text("Software Engineer",
                                     fontWeight: FontWeight.w500,
-                                    fontSize: size16)
+                                    textColor: white,
+                                    fontSize: size18)
+                                .paddingBottom(size20),
+                            text("waheed.ullah@gmail.com",
+                                    fontWeight: FontWeight.w500,
+                                    textColor: white,
+                                    fontSize: size18)
                                 .paddingSymmetric(vertical: size20),
                           ],
-                        ),
-                        text("abc@gmail.com",
-                                fontWeight: FontWeight.w500, fontSize: size16)
-                            .paddingSymmetric(vertical: size20),
-                      ],
-                    ).paddingAll(size10),
+                        ).paddingAll(size10),
+                      ),
+                    ],
                   ),
                 ),
               ],

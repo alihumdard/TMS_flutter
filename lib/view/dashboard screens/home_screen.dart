@@ -8,6 +8,7 @@ import 'package:tms/assets/spacing.dart';
 import 'package:tms/components/text.dart';
 import 'package:tms/components/textfield.dart';
 import 'package:tms/view/auth%20screens/welcome_screen.dart';
+import 'package:tms/view/dashboard%20screens/companies_screen.dart';
 import 'package:tms/view/dashboard%20screens/department_screen.dart';
 import 'package:tms/view/dashboard%20screens/notification_screen.dart';
 import 'package:tms/view/dashboard%20screens/profile_screen.dart';
@@ -89,7 +90,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 drawerListtile(
                   txt: "Companies",
                   icon: Icons.store_mall_directory_outlined,
-                  ontap: () {},
+                  ontap: () {
+                    const CompanyScreen().launch(context);
+                  },
                 ),
                 drawerListtile(
                   txt: "JD Task",
@@ -198,8 +201,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         text(dashboardgradview[index].task_amount,
                                 textColor: white,

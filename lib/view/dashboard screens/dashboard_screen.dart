@@ -18,18 +18,18 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   List<IconData> navbarIconsSvgs = [
     Icons.home_filled,
-    Icons.home_work_outlined,
+    Icons.format_list_numbered_sharp,
     Icons.folder_open_outlined,
-    Icons.format_list_numbered_sharp
+    Icons.home_work_outlined,
   ];
 
   @override
   Widget build(BuildContext context) {
     List widgets = <Widget>[
       const HomeScreen(),
-      const DepartmentScreen(),
-      const ProjectScreen(),
       const TasksScreen(),
+      const ProjectScreen(),
+      const DepartmentScreen(),
     ];
 
     var bottomNavigator = Container(
