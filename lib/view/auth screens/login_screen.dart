@@ -71,6 +71,14 @@ class _LoginScreenState extends State<LoginScreen> {
               child: BuildButton(
                   loading: authViewModel.loading,
                   onPressed: () {
+                    if (emailController.text.isEmpty) {
+                      toast("Please Enter the email address",
+                          bgColor: redColor);
+                    } else if (!emailController.text.contains("@")) {
+                      toast("Please Enter the Valid email", bgColor: redColor);
+                    } else if (passwordController.text.isEmptyOrNull) {
+                      toast("Please Enter the password", bgColor: redColor);
+                    }
                     Map<String, dynamic> data = {
                       "email": emailController.text.trim().toString(),
                       "password": passwordController.text.trim().toString(),

@@ -1,10 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
 import 'package:tms/assets/colors.dart';
 import 'package:tms/assets/images.dart';
 import 'package:tms/assets/spacing.dart';
 import 'package:tms/components/text.dart';
+import 'package:tms/view%20model/auth_view_model.dart';
 import 'package:tms/view/auth%20screens/welcome_screen.dart';
+import 'package:tms/view/dashboard%20screens/dashboard_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -38,12 +42,20 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    Future.delayed(const Duration(seconds: 6), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const WelcomeScreen(),
-        ),
-      );
+    Future.delayed(const Duration(seconds: 6), () async {
+      await Provider.of<AuthViewModel>(context, listen: false).loadToken();
+      final token = Provider.of<AuthViewModel>(context, listen: false).token;
+      if (token != null) {
+        const DashBoardScreen().launch(context);
+        if (kDebugMode) {
+          print("token saved $token");
+        }
+      } else {
+        const WelcomeScreen().launch(context);
+        if (kDebugMode) {
+          print("No token found!!!");
+        }
+      }
     });
   }
 

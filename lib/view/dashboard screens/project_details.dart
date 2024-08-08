@@ -3,11 +3,13 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:tms/assets/colors.dart';
 import 'package:tms/assets/spacing.dart';
 import 'package:tms/components/build_button.dart';
+import 'package:tms/components/text.dart';
 import 'package:tms/components/textfield.dart';
+import 'package:tms/view%20model/home_view_model.dart';
 
 class ProjectDetailsScreen extends StatefulWidget {
-  String? topic;
-  ProjectDetailsScreen({this.topic, super.key});
+  var id;
+  ProjectDetailsScreen({this.id, super.key});
 
   @override
   State<ProjectDetailsScreen> createState() => _ProjectDetailsScreenState();
@@ -19,60 +21,75 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(widget.topic.toString()),
+        title: Text(widget.id!["name"].toString()),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            detailsText(
-              txt: "Overview",
-            ),
-            detailsSubTxt(
-              subtext:
-                  "We design and develop innovative digital solutions that drive business growth. Our team of experts crafts tailored experiences that captivate audiences.",
-            ).paddingSymmetric(vertical: size10),
-            detailsText(
-              txt: "Work Flow",
-            ),
-            detailsSubTxt(
-              subtext:
-                  "Our collaborative process involves discovery, design, development, testing, and launch, ensuring seamless execution and exceptional results.",
-            ).paddingSymmetric(vertical: size10),
-            detailsText(
-              txt: "DeadLine",
-            ),
-            detailsSubTxt(
-              subtext:
-                  "Project timeline: 12 weeks, with milestones and check-ins to ensure timely delivery and client satisfaction.",
-            ).paddingSymmetric(vertical: size10),
-            detailsText(
-              txt: "Reference Project",
-            ),
-            detailsSubTxt(
-              subtext:
-                  "View our recent success story with XYZ Corporation, where we increased website engagement by 300% through a user-centered design approach.",
-            ).paddingSymmetric(vertical: size10),
-            const Text(
-              "Write Comments",
-              style: TextStyle(fontSize: size16, fontWeight: FontWeight.w500),
-            ).paddingSymmetric(vertical: size15),
-            textField(
-              hint: "Write here...",
-              minline: 4,
-              height: size100,
-              maxline: 6,
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: BuildButton(
-                  onPressed: () {},
-                  width: MediaQuery.sizeOf(context).width * .4,
-                  text: "Submit"),
-            )
-          ],
-        ).paddingAll(size20),
-      ),
+      body: FutureBuilder(
+          future: HomeViewModel()
+              .getSingalOrderDetails(context, widget.id["id"].toString()),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                  child: CircularProgressIndicator(
+                color: primary_color,
+              ));
+            } else if (snapshot.hasError) {
+              return Center(
+                  child: text(snapshot.error.toString(), maxLine: 10));
+            } else if (!snapshot.hasData) {
+              return Center(child: text("No Projects found", maxLine: 10));
+            } else {
+              var dataa = snapshot.data["data"]["project"];
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    detailsText(
+                      txt: "Overview",
+                    ),
+                    detailsSubTxt(
+                      subtext: dataa["description"] ?? "Not Available",
+                    ).paddingSymmetric(vertical: size10),
+                    detailsText(
+                      txt: "Work Flow",
+                    ),
+                    detailsSubTxt(
+                      subtext: dataa["plan"] ?? "Not Available",
+                    ).paddingSymmetric(vertical: size10),
+                    detailsText(
+                      txt: "DeadLine",
+                    ),
+                    detailsSubTxt(
+                      subtext: dataa["deadline"] ?? "Not Available",
+                    ).paddingSymmetric(vertical: size10),
+                    detailsText(
+                      txt: "Reference Project",
+                    ),
+                    detailsSubTxt(
+                      subtext: dataa["ref_url"] ?? "Not available",
+                    ).paddingSymmetric(vertical: size10),
+                    const Text(
+                      "Write Comments",
+                      style: TextStyle(
+                          fontSize: size16, fontWeight: FontWeight.w500),
+                    ).paddingSymmetric(vertical: size15),
+                    textField(
+                      hint: "Write here...",
+                      minline: 4,
+                      height: size100,
+                      maxline: 6,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: BuildButton(
+                          onPressed: () {},
+                          width: MediaQuery.sizeOf(context).width * .4,
+                          text: "Submit"),
+                    )
+                  ],
+                ).paddingAll(size20),
+              );
+            }
+          }),
     );
   }
 }

@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
 import 'package:tms/assets/colors.dart';
 import 'package:tms/assets/images.dart';
 import 'package:tms/assets/spacing.dart';
 import 'package:tms/components/text.dart';
 import 'package:tms/components/textfield.dart';
-import 'package:tms/view/auth%20screens/welcome_screen.dart';
+import 'package:tms/view%20model/auth_view_model.dart';
+import 'package:tms/view/auth%20screens/login_screen.dart';
 import 'package:tms/view/dashboard%20screens/companies_screen.dart';
 import 'package:tms/view/dashboard%20screens/department_screen.dart';
 import 'package:tms/view/dashboard%20screens/notification_screen.dart';
@@ -28,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var orientation = MediaQuery.of(context).orientation;
+    var provider = Provider.of<AuthViewModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: white,
@@ -123,10 +126,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 drawerListtile(
                   txt: "Sign Out",
                   icon: Icons.logout,
-                  ontap: () {
-                    const WelcomeScreen().launch(context);
+                  ontap: () async {
+                    const LoginScreen().launch(context);
                     toast("Sign Out successfully",
                         bgColor: redColor, textColor: white);
+                    await provider.deleteToken();
                   },
                 ),
               ],
